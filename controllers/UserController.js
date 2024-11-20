@@ -23,3 +23,17 @@ module.exports.addToLikedMovies = async (req, res) => {
     return res.json({ msg: "Error Adding Movies" });
   }
 };
+
+module.exports.getLikedMovies = async (req, res) => {
+  try {
+    const {email} = req.body;
+    const user = await User.findOne({email});
+    if(user) {
+      res.json({msg:"succsess,", movies: user.likedMovies})
+    } else {
+      return res.json({msg: "User with given email not found"})
+    }
+  } catch (e) {
+    return res.json({ msg: "Error Fetching Movies" });
+  }
+}
